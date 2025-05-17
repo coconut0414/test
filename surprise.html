@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>惊喜界面</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #e9d6f6; /* 淡紫色 */
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .chiakawa {
+            width: 320px;
+            margin-bottom: 20px;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px #bfa2d6;
+            background: #fff0ff;
+        }
+
+        .question {
+            font-size: 26px;
+            margin-bottom: 24px;
+            color: #a85ca4;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 28px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(.4,2,.6,1);
+            font-weight: bold;
+            box-shadow: 0 2px 8px #d1b3e0;
+        }
+
+        .btn-like {
+            background-color: #f7b6d2;
+            color: #3a2b3c;
+        }
+
+        .btn-love {
+            background-color: #2d2d2d;
+            color: #ffb6e6;
+        }
+
+        .btn:hover {
+            filter: brightness(1.1);
+            transform: scale(1.1);
+        }
+
+        .error-message {
+            color: #d72660;
+            font-size: 26px;
+            margin-top: 24px;
+            display: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* 弹窗模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(80, 60, 100, 0.25);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: #fff0ff;
+            color: #a85ca4;
+            padding: 32px 36px 24px 36px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px #bfa2d6;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+            min-width: 260px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: #a85ca4;
+            cursor: pointer;
+        }
+        .modal-content .close-btn:hover {
+            color: #d72660;
+        }
+        .second-question {
+            margin-top: 32px;
+        }
+        .second-buttons {
+            display: flex;
+            gap: 28px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="kuluomi.png" alt="Kuromi" class="chiakawa">
+        <div class="question">喜不喜欢我？</div>
+        <div class="buttons">
+            <button class="btn btn-like" onclick="handleLike()">喜欢</button>
+            <button class="btn btn-love" onclick="handleLove()">很喜欢</button>
+        </div>
+        <!-- 第一个弹窗 -->
+        <div class="modal" id="modal1">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeModal('modal1')">×</button>
+                💔你选错了
+            </div>
+        </div>
+        <!-- 第二个弹窗 -->
+        <div class="modal" id="modal2">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeModal('modal2')">×</button>
+                💔你又选错了
+            </div>
+        </div>
+        <!-- 第二个问题 -->
+        <div class="modal" id="secondQuestion">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeModal('secondQuestion')">×</button>
+                <div class="second-question">有多喜欢？</div>
+                <div class="second-buttons">
+                    <button class="btn btn-like" onclick="handleSecondLike()">很喜欢</button>
+                    <button class="btn btn-love" onclick="handleSecondLove()">特别喜欢</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleLike() {
+            // 显示第一个弹窗
+            document.getElementById('modal1').style.display = 'flex';
+            // 按钮缩放
+            const likeBtn = document.querySelector('.btn-like');
+            const loveBtn = document.querySelector('.btn-love');
+            likeBtn.style.transform = 'scale(0.8)';
+            loveBtn.style.transform = 'scale(1.2)';
+        }
+
+        function handleLove() {
+            // 弹出第二个问题
+            document.getElementById('secondQuestion').style.display = 'flex';
+        }
+
+        function handleSecondLike() {
+            // 显示第二个弹窗
+            document.getElementById('secondQuestion').style.display = 'none';
+            document.getElementById('modal2').style.display = 'flex';
+        }
+
+        function handleSecondLove() {
+            // 你可以自定义特别喜欢的反馈，这里暂时只关闭弹窗
+            document.getElementById('secondQuestion').style.display = 'none';
+            alert('❤️ 我也特别喜欢你！');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+            if (id === 'modal2') {
+                document.getElementById('secondQuestion').style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html> 
